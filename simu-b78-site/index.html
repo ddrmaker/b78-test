@@ -442,7 +442,6 @@ body.padmode #steer,body.padmode #drive,body.padmode #lookHint{display:none!impo
 .lim{pointer-events:auto;cursor:pointer}.lim.limon{box-shadow:0 0 0 3px var(--go)}
 .limtag{position:absolute;margin-left:-30px;margin-top:40px;background:var(--go);color:#062114;font-family:var(--f-display);font-weight:700;font-size:10px;padding:0 4px;border-radius:4px}
 .ihint{margin:6px 0 0;font-size:13px;line-height:1.35;color:var(--muted);background:rgba(255,255,255,.06);border:1px solid var(--edge);border-radius:10px;padding:7px 34px 7px 10px;position:relative}.ihint .btn{position:absolute;right:4px;top:4px;padding:2px 7px;font-size:13px}
-body.tlk #drive{opacity:.42;transition:opacity .3s}#drive{transition:opacity .3s}
 .vhint{display:block;font-size:12px;color:var(--muted);max-width:420px;line-height:1.3}
 #padModal{background:rgba(7,10,14,.88);display:grid;place-items:center}
 #padModal[hidden]{display:none!important}
@@ -577,10 +576,10 @@ body.haskb .kb.kin{position:static;margin-left:8px;box-shadow:0 1px 0 #111;font-
           <p class="ihint" id="homeHint" hidden>Pour garder votre progression sur iPhone : touchez <b>Partager</b> puis <b>Sur l'écran d'accueil</b>. <button class="btn" id="homeHintX" aria-label="Fermer">✕</button></p>
           <div class="g2"><button class="gbtn" id="bQuiz">Code de la route</button><button class="gbtn blue" id="bMeth">La méthode</button></div>
           <div class="g2"><button class="gbtn dark" id="bPad">Manette sur téléphone</button><button class="gbtn dark" id="bInstall" hidden>Installer l'appli</button></div>
-          <div class="sets"><label class="sw"><input type="checkbox" id="setVoice" checked>Voix du moniteur</label><select id="setVoiceSel" class="vsel" hidden aria-label="Choix de la voix"></select><button class="tb" id="bVoiceTest" style="height:30px;font-size:14px">Tester la voix</button><label class="sw"><input type="checkbox" id="setCoach" checked>Conseils en roulant</label><label class="sw"><input type="checkbox" id="setDC" checked>Double commande</label><label class="sw"><input type="checkbox" id="setStop" checked>Arrêt à chaque faute</label><label class="sw"><input type="checkbox" id="setInst" checked>Installation avant de partir</label><label class="sw"><input type="checkbox" id="setVir" checked>Aide aux virages</label><label class="sw"><input type="checkbox" id="setTurnLook" checked>Regard dans les virages</label><label class="sw sel">Direction <select id="setDir" class="vsel" style="display:inline-block"><option value="facile">facile (½ tour)</option><option value="reel">réaliste (1,5 tour)</option></select></label><label class="sw sel">Champ de vision <input type="range" id="setFov" min="80" max="135" step="1" style="width:110px"> <b id="fovV"></b></label><small class="vhint" id="voiceHint" hidden></small><button class="tb" id="bFull" style="height:30px;font-size:14px">Plein écran</button></div>
+          <div class="sets"><label class="sw"><input type="checkbox" id="setVoice" checked>Voix du moniteur</label><select id="setVoiceSel" class="vsel" hidden aria-label="Choix de la voix"></select><button class="tb" id="bVoiceTest" style="height:30px;font-size:14px">Tester la voix</button><label class="sw"><input type="checkbox" id="setCoach" checked>Conseils en roulant</label><label class="sw"><input type="checkbox" id="setDC" checked>Double commande</label><label class="sw"><input type="checkbox" id="setStop" checked>Arrêt à chaque faute</label><label class="sw"><input type="checkbox" id="setInst" checked>Installation avant de partir</label><label class="sw"><input type="checkbox" id="setVir" checked>Aide aux virages</label><label class="sw sel">Direction <select id="setDir" class="vsel" style="display:inline-block"><option value="facile">facile (½ tour)</option><option value="reel">réaliste (1,5 tour)</option></select></label><label class="sw sel">Champ de vision <input type="range" id="setFov" min="80" max="135" step="1" style="width:110px"> <b id="fovV"></b></label><small class="vhint" id="voiceHint" hidden></small><button class="tb" id="bFull" style="height:30px;font-size:14px">Plein écran</button></div>
         </div>
       </div>
-      <p class="fine foot"><b class="ver" id="appVer">Version 14</b> · Simulation pédagogique simplifiée : elle ne remplace pas les leçons avec un moniteur. Clavier : flèches, P R N D, Q / E clignotants, Espace frein à main, Entrée START, V vue. Moteur 3D : three.js (licence MIT). Polices : Bungee et Barlow (licence SIL OFL).</p>
+      <p class="fine foot"><b class="ver" id="appVer">Version 15</b> · Simulation pédagogique simplifiée : elle ne remplace pas les leçons avec un moniteur. Clavier : flèches, P R N D, Q / E clignotants, Espace frein à main, Entrée START, V vue. Moteur 3D : three.js (licence MIT). Polices : Bungee et Barlow (licence SIL OFL).</p>
     </section>
     <section class="scr" id="scrCareer" hidden>
       <div class="chead"><button class="gbtn dark sm" id="cBack">← Retour</button><h2>Carrière</h2><div class="lvl" id="lvlChip2"></div></div>
@@ -1818,7 +1817,7 @@ const FAUTES={
     tip:"Écoutez l'indication jusqu'au bout et repérez la rue à prendre avant d'arriver au carrefour."},
 };
 const pick=a=>a[(Math.random()*a.length)|0];
-const APP_VERSION='14';
+const APP_VERSION='15';
 const settings={voice:true,coach:true,dc:true,stop:true,guide:true,inst:true,vir:true,dir:'facile',fov:68,hfov:118,turnLook:true};
 try{Object.assign(settings,JSON.parse(localStorage.getItem('simuB78')||'{}'));}catch(e){}
 function saveSettings(){try{localStorage.setItem('simuB78',JSON.stringify(settings));}catch(e){}}
@@ -3081,7 +3080,7 @@ $('#bVoiceTest').addEventListener('click',()=>{audioInit();pickVoice();if(!('spe
 const setD=$('#setDC');setD.checked=settings.dc;setD.addEventListener('change',()=>{settings.dc=setD.checked;saveSettings();});
 {const sd=$('#setDir'),sf=$('#setFov'),fv=$('#fovV');sd.value=settings.dir;sf.value=settings.hfov;fv.textContent=settings.hfov+'°';
   sd.addEventListener('change',()=>{settings.dir=sd.value;saveSettings();});sf.addEventListener('input',()=>{settings.hfov=+sf.value;fv.textContent=sf.value+'°';saveSettings();resize();});}
-for(const [id,k] of [['#setStop','stop'],['#setGuide','guide'],['#setInst','inst'],['#setVir','vir'],['#setTurnLook','turnLook']]){const el=$(id);el.checked=settings[k];el.addEventListener('change',()=>{settings[k]=el.checked;saveSettings();});}
+for(const [id,k] of [['#setStop','stop'],['#setGuide','guide'],['#setInst','inst'],['#setVir','vir']]){const el=$(id);el.checked=settings[k];el.addEventListener('change',()=>{settings[k]=el.checked;saveSettings();});}
 $('#bHelp').addEventListener('click',()=>openMethod(mode==='creneau'?'creneau':mode==='bataille'?'bataille':'carrefours'));
 ui.end.addEventListener('click',()=>{if(!game||game.ending)return;
   if(mode==='ville'){game.ending=true;clearSave();if(game.mission){game.fail={kind:'abandon'};return showResults(false);}return showResults(!game.fail);}
@@ -3257,7 +3256,7 @@ function updateCameras(dt){
   for(const k of ['int','l','r']){const o=MIR[k];if(o.y)c[k].rotateY(o.y);if(o.p)c[k].rotateX(o.p);}
   camMain.layers.set(0);
   if(view==='cockpit'){camMain.layers.enable(1);const cmpV=innerHeight<=440;if(wheel3D&&wheel3D.visible===cmpV)wheel3D.visible=!cmpV;camMain.position.copy(toW(-0.37,1.23+(cmpV?0.04:0)+car.bodyY-SEAT.back*0.01,0.24+SEAT.pos*0.022+SEAT.back*0.012));
-    {const kmh=Math.abs(car.v)*3.6,tg=settings.turnLook&&!lookHeld&&mode==='ville'&&car.gear==='D'?-clamp(car.wheel/400,-1,1)*55*deg*clamp((48-kmh)/22,0,1):0;TLK+=(tg-TLK)*Math.min(1,dt*2.6);const tk=Math.abs(TLK)>0.3;if(tk!==TLKon){TLKon=tk;document.body.classList.toggle('tlk',tk);}}
+    TLK=0;
     camMain.rotation.set(headPitch+car.pitch-0.05,car.yaw+headYaw+TLK,car.roll,'YXZ');}
   else if(view==='chase'){camMain.layers.enable(2);const f=fwdOf(car.yaw+orbitYaw);tmpV.set(car.x-f.x*7.5,2.8+orbitH,car.z-f.z*7.5);camPos.lerp(tmpV,Math.min(1,dt*6));if(camPos.distanceTo(tmpV)>20)camPos.copy(tmpV);
     camMain.position.copy(camPos);camMain.up.set(0,1,0);camMain.lookAt(car.x,1,car.z);}
