@@ -439,6 +439,9 @@ body.padmode #steer,body.padmode #drive,body.padmode #lookHint{display:none!impo
   .inst .ifine{display:none}.ifb{margin:2px 0 4px;font-size:12px}
   .fcard{width:min(620px,92vw)}.fcard .fbadge{display:none}.fcard .rct{font-size:18px}.fcard .fi p{font-size:12.5px;margin:2px 0}.fcard .fnote{font-size:11.5px}
 }
+.lim{pointer-events:auto;cursor:pointer}.lim.limon{box-shadow:0 0 0 3px var(--go)}
+.limtag{position:absolute;margin-left:-30px;margin-top:40px;background:var(--go);color:#062114;font-family:var(--f-display);font-weight:700;font-size:10px;padding:0 4px;border-radius:4px}
+.ihint{margin:6px 0 0;font-size:13px;line-height:1.35;color:var(--muted);background:rgba(255,255,255,.06);border:1px solid var(--edge);border-radius:10px;padding:7px 34px 7px 10px;position:relative}.ihint .btn{position:absolute;right:4px;top:4px;padding:2px 7px;font-size:13px}
 .vhint{display:block;font-size:12px;color:var(--muted);max-width:420px;line-height:1.3}
 #padModal{background:rgba(7,10,14,.88);display:grid;place-items:center}
 #padModal[hidden]{display:none!important}
@@ -467,7 +470,7 @@ body.padmode #steer,body.padmode #drive,body.padmode #lookHint{display:none!impo
 .piC button{height:52px;border-radius:12px;border:2px solid #111;background:#fff;color:#111;font-family:var(--f-display);font-weight:700;font-size:20px;touch-action:none}.piC button.wide{width:100%}
 .pifb{margin:0;font-size:14px;font-weight:700;min-height:18px}.pifb.ok{color:#1a7f4b}.pifb.ko{color:#b34700}
 .pinext{height:48px;border-radius:12px;border:3px solid #111;background:var(--yel);color:#111;font-family:var(--f-display);font-weight:700;font-size:18px}.pinext[disabled]{opacity:.45}.ptilt{font-size:13px;color:var(--muted);display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:center}
-.ptilt .pbtn{font-size:13px;height:32px;padding:0 8px;white-space:nowrap}.ptilt{gap:5px!important;flex-wrap:nowrap!important}.pbtn.on{background:var(--go);color:#0b0d10;border-color:var(--go)}.pbtn.pulse{animation:pgp 1.2s ease-in-out infinite}@keyframes pgp{50%{box-shadow:0 0 0 5px rgba(47,194,122,.35)}}
+.ptilt .pbtn{font-size:13px;height:32px;padding:0 8px;white-space:nowrap}.pbtn.pam{height:40px;font-size:14px;flex:1}.pbtn.on{background:var(--go);color:#0b0d10;border-color:var(--go)}.ptilt{gap:5px!important;flex-wrap:nowrap!important}.pbtn.on{background:var(--go);color:#0b0d10;border-color:var(--go)}.pbtn.pulse{animation:pgp 1.2s ease-in-out infinite}@keyframes pgp{50%{box-shadow:0 0 0 5px rgba(47,194,122,.35)}}
 #pad>div{min-height:0}
 @media (max-height:380px){#pad{--ws:min(50vh,34vw,300px);--ph:min(60vh,330px);gap:6px}#pad .pl,#pad .pm{gap:6px}#pad .start{width:48px;height:48px;font-size:11px}#pad .hb{height:38px}.plook{height:44px}.ptilt .pbtn{height:28px}#pad .blink button{height:36px}.pbtn{height:30px}#pad .ptop{font-size:14px}.pgmsg{-webkit-line-clamp:2!important}}
 .pgmsg{font-size:11px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;color:var(--muted);text-align:center;min-height:15px;max-width:330px;line-height:1.25}
@@ -496,7 +499,7 @@ body.haskb .kb.kin{position:static;margin-left:8px;box-shadow:0 1px 0 #111;font-
       <div class="tl">
         <button class="ib" id="bMenu" aria-label="Pause"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg></button>
         <div class="chip speed" id="speedBox"><b id="spd">0</b><small>km/h</small></div>
-        <div class="lim" id="lim" title="Vitesse maximale ici">50</div>
+        <div class="lim" id="lim" role="button" title="Limiteur de vitesse : touchez pour l'activer (touche K)">50</div><span class="limtag" id="limTag" hidden>LIM</span>
         <div class="zchip z-ville" id="zoneChip">Ville</div>
       </div>
       <div class="tc"><div class="scorebox"><span class="sl">SCORE</span><b id="score">0</b><span class="combo" id="combo">x1</span><span class="cbar"><i id="comboBar"></i></span></div></div>
@@ -568,13 +571,15 @@ body.haskb .kb.kin{position:static;margin-left:8px;box-shadow:0 1px 0 #111;font-
         <div class="tmenu">
           <div class="lvl" id="lvlChip"></div>
           <div class="resume g2" id="resumeRow" hidden><button class="gbtn yel" id="bResume">Reprendre</button><button class="gbtn" id="bRestart">Recommencer</button></div>
+          <button class="gbtn yel" id="bCont" hidden>Reprendre la partie</button>
           <button class="gbtn yel big" id="bPlay">JOUER</button>
+          <p class="ihint" id="homeHint" hidden>Pour garder votre progression sur iPhone : touchez <b>Partager</b> puis <b>Sur l'écran d'accueil</b>. <button class="btn" id="homeHintX" aria-label="Fermer">✕</button></p>
           <div class="g2"><button class="gbtn" id="bQuiz">Code de la route</button><button class="gbtn blue" id="bMeth">La méthode</button></div>
           <div class="g2"><button class="gbtn dark" id="bPad">Manette sur téléphone</button><button class="gbtn dark" id="bInstall" hidden>Installer l'appli</button></div>
-          <div class="sets"><label class="sw"><input type="checkbox" id="setVoice" checked>Voix du moniteur</label><select id="setVoiceSel" class="vsel" hidden aria-label="Choix de la voix"></select><button class="tb" id="bVoiceTest" style="height:30px;font-size:14px">Tester la voix</button><label class="sw"><input type="checkbox" id="setCoach" checked>Conseils en roulant</label><label class="sw"><input type="checkbox" id="setDC" checked>Double commande</label><label class="sw"><input type="checkbox" id="setStop" checked>Arrêt à chaque faute</label><label class="sw"><input type="checkbox" id="setInst" checked>Installation avant de partir</label><label class="sw"><input type="checkbox" id="setVir" checked>Aide aux virages</label><small class="vhint" id="voiceHint" hidden></small><button class="tb" id="bFull" style="height:30px;font-size:14px">Plein écran</button></div>
+          <div class="sets"><label class="sw"><input type="checkbox" id="setVoice" checked>Voix du moniteur</label><select id="setVoiceSel" class="vsel" hidden aria-label="Choix de la voix"></select><button class="tb" id="bVoiceTest" style="height:30px;font-size:14px">Tester la voix</button><label class="sw"><input type="checkbox" id="setCoach" checked>Conseils en roulant</label><label class="sw"><input type="checkbox" id="setDC" checked>Double commande</label><label class="sw"><input type="checkbox" id="setStop" checked>Arrêt à chaque faute</label><label class="sw"><input type="checkbox" id="setInst" checked>Installation avant de partir</label><label class="sw"><input type="checkbox" id="setVir" checked>Aide aux virages</label><label class="sw sel">Direction <select id="setDir" class="vsel" style="display:inline-block"><option value="facile">facile (½ tour)</option><option value="reel">réaliste (1,5 tour)</option></select></label><label class="sw sel">Champ de vision <input type="range" id="setFov" min="55" max="82" step="1" style="width:110px"> <b id="fovV"></b></label><small class="vhint" id="voiceHint" hidden></small><button class="tb" id="bFull" style="height:30px;font-size:14px">Plein écran</button></div>
         </div>
       </div>
-      <p class="fine foot"><b class="ver" id="appVer">Version 12</b> · Simulation pédagogique simplifiée : elle ne remplace pas les leçons avec un moniteur. Clavier : flèches, P R N D, Q / E clignotants, Espace frein à main, Entrée START, V vue. Moteur 3D : three.js (licence MIT). Polices : Bungee et Barlow (licence SIL OFL).</p>
+      <p class="fine foot"><b class="ver" id="appVer">Version 13</b> · Simulation pédagogique simplifiée : elle ne remplace pas les leçons avec un moniteur. Clavier : flèches, P R N D, Q / E clignotants, Espace frein à main, Entrée START, V vue. Moteur 3D : three.js (licence MIT). Polices : Bungee et Barlow (licence SIL OFL).</p>
     </section>
     <section class="scr" id="scrCareer" hidden>
       <div class="chead"><button class="gbtn dark sm" id="cBack">← Retour</button><h2>Carrière</h2><div class="lvl" id="lvlChip2"></div></div>
@@ -684,23 +689,24 @@ function padData(m){if(!m||typeof m!=='object')return;
     else if(k==='horn'){tone(392,0.4,'square',0.09);tone(494,0.4,'square',0.07);}else if(k==='view')cycleView();
     else if(k==='ok'){if(faultStop)closeFault();else if(!$('#rcard').hidden)closeCard();}
     else if(k==='inst'){if(INST.open){if(m.v==='next')instNext();else instAct(m.v);}}
+    else if(k==='lim')toggleLim();
     else if(k==='pause'){if(mode&&mode!=='quiz'&&!finished){if(paused){paused=false;showOnly(null);ui.hud.hidden=false;layoutMirrors();}else openMenu();}}}}
 function padTick(dt){if(!PAD.connected)return;PAD.stT-=dt;if(PAD.stT>0)return;PAD.stT=0.15;
-  PAD.send({t:'st',v:Math.round(Math.abs(car.v)*3.6),g:car.gear,e:car.engine,h:car.handbrake,bl:car.blinker,w:Math.round(car.wheel),lim:RT.lim,card:!!faultStop||(!$('#rcard').hidden&&frozen),pause:!!paused,play:!!(mode&&mode!=='quiz'&&!finished),inst:INST.open?{i:INST.i,n:IST.length,k:IST[INST.i].k,t:IST[INST.i].t,ok:instOk(IST[INST.i].k),fb:instFb(IST[INST.i].k)}:null});}
+  PAD.send({t:'st',v:Math.round(Math.abs(car.v)*3.6),g:car.gear,e:car.engine,h:car.handbrake,bl:car.blinker,w:Math.round(car.wheel),sr:steerRatio(),limOn:!!car.limOn,lim:RT.lim,card:!!faultStop||(!$('#rcard').hidden&&frozen),pause:!!paused,play:!!(mode&&mode!=='quiz'&&!finished),inst:INST.open?{i:INST.i,n:IST.length,k:IST[INST.i].k,t:IST[INST.i].t,ok:instOk(IST[INST.i].k),fb:instFb(IST[INST.i].k)}:null});}
 
 /* ---------- Page manette (sur le téléphone) ---------- */
 function runPad(code){
   document.title='Manette · Simu B78';const app=$('#app');if(app)app.style.display='none';
   const root=document.createElement('div');root.id='pad';document.body.appendChild(root);
-  root.innerHTML=`<div class="ptop"><span class="pdot" id="pDot"></span><span id="pMsg">Connexion…</span><span class="pspd"><b id="pSpd">0</b> km/h · <b id="pGear">P</b></span><button class="pbtn" id="pView">Vue</button><button class="pbtn" id="pPause">Pause</button><button class="pbtn" id="pFull">Plein écran</button></div>
+  root.innerHTML=`<div class="ptop"><span class="pdot" id="pDot"></span><span id="pMsg">Connexion…</span><span class="pspd"><b id="pSpd">0</b> km/h · <b id="pGear">P</b></span><button class="pbtn" id="pLim">LIM</button><button class="pbtn" id="pView">Vue</button><button class="pbtn" id="pPause">Pause</button><button class="pbtn" id="pFull">Plein écran</button></div>
   <div class="pl"><div class="blink"><button id="pBL" aria-label="Clignotant gauche"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 12l8-7v4.5h10v5H11V19z"/></svg></button><button id="pHorn">KLAXON</button><button id="pBR" aria-label="Clignotant droit"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 12l-8-7v4.5H3v5h10V19z"/></svg></button></div>
     <div class="wheel" id="pWheel"><svg viewBox="-100 -100 200 200"><g id="pWheelG"><circle r="82" fill="none" stroke="#0b0d10" stroke-width="20"/><circle r="82" fill="none" stroke="#262c34" stroke-width="15"/><path d="M-6 -90h12v15h-12z" fill="#ffb21e"/><path d="M-76 10 L-24 14 L-18 32 L18 32 L24 14 L76 10 L74 22 L26 40 L14 70 L-14 70 L-26 40 L-74 22Z" fill="#1d2228"/><circle r="26" fill="#14181d" stroke="#323a44" stroke-width="2"/></g></svg></div>
     </div>
   <div class="pm"><button class="start" id="pStart">START<br>STOP</button><button class="hb on" id="pHB"><span class="ic">P</span><span>Frein à main</span></button>
-    <div class="plook" id="pLook"><span>← Glissez ici pour regarder →</span><i id="pLookK"></i></div><div class="ptilt"><button class="pbtn" id="pGyro">Tête par rotation</button><button class="pbtn" id="pCtr">Recentrer</button><button class="pbtn" id="pInv" aria-label="Inverser le sens">⇄</button></div><div class="pgmsg" id="pGmsg"></div><div class="pinst" id="pInst" hidden><small>Installation · <span id="piN"></span></small><b id="piT"></b><div class="piC" id="piC"></div><p class="pifb" id="piFb"></p><button class="pinext" id="piNext">Étape suivante</button></div><button class="pok" id="pOK" hidden>OK · Reprendre</button></div>
+    <div class="plook" id="pLook"><span>← Glissez ici pour regarder →</span><i id="pLookK"></i></div><div class="ptilt"><button class="pbtn pam" id="pAmL">◀ Angle mort</button><button class="pbtn pam" id="pAmR">Angle mort ▶</button></div><div class="pinst" id="pInst" hidden><small>Installation · <span id="piN"></span></small><b id="piT"></b><div class="piC" id="piC"></div><p class="pifb" id="piFb"></p><button class="pinext" id="piNext">Étape suivante</button></div><button class="pok" id="pOK" hidden>OK · Reprendre</button></div>
   <div class="pr"><div class="gear" id="pGearSel"><button data-g="P" class="on">P</button><button data-g="R">R</button><button data-g="N">N</button><button data-g="D">D</button></div>
     <div class="pedal brake" id="pBrk"><i></i><span>Frein</span></div><div class="pedal accel" id="pAcc"><i></i><span>Accélérateur</span></div></div>`;
-  const S={w:0,held:false,a:0,b:0,look:0,tilt:false,tilt0:null},q=k=>root.querySelector(k);let conn=null,ok=false;
+  const S={w:0,held:false,a:0,b:0,look:0,sr:3,am:0},q=k=>root.querySelector(k);let conn=null,ok=false;
   let piK=null,piRep=null;const piStop=()=>{if(piRep){clearTimeout(piRep);clearInterval(piRep);piRep=null;}};
   const instUI=I=>{const box=q('#pInst');if(!I){box.hidden=true;piK=null;piStop();return;}box.hidden=false;q('#piN').textContent=`étape ${I.i+1} / ${I.n}`;q('#piT').textContent=I.t;
     const fb=q('#piFb');fb.textContent=I.fb;fb.className='pifb '+(I.ok?'ok':'ko');q('#piNext').disabled=!I.ok;q('#piNext').textContent=I.i===I.n-1?'Installé : on démarre':'Étape suivante';
@@ -721,44 +727,17 @@ function runPad(code){
     el.addEventListener('pointermove',e=>{if(el._p!==e.pointerId)return;e.preventDefault();move(e);});const end=e=>{if(el._p!==e.pointerId)return;el._p=null;up(e);};el.addEventListener('pointerup',end);el.addEventListener('pointercancel',end);};
   const W=q('#pWheel');let wc={x:0,y:0,last:0};
   drag(W,e=>{const r=W.getBoundingClientRect();wc.x=r.left+r.width/2;wc.y=r.top+r.height/2;wc.last=Math.atan2(e.clientY-wc.y,e.clientX-wc.x);S.held=true;},
-    e=>{const a=Math.atan2(e.clientY-wc.y,e.clientX-wc.x);let d=a-wc.last;if(d>Math.PI)d-=2*Math.PI;if(d<-Math.PI)d+=2*Math.PI;wc.last=a;if(Math.hypot(e.clientX-wc.x,e.clientY-wc.y)>8)S.w=Math.max(-540,Math.min(540,S.w+d*180/Math.PI*1.15));},()=>{S.held=S.tilt;});
+    e=>{const a=Math.atan2(e.clientY-wc.y,e.clientX-wc.x);let d=a-wc.last;if(d>Math.PI)d-=2*Math.PI;if(d<-Math.PI)d+=2*Math.PI;wc.last=a;if(Math.hypot(e.clientX-wc.x,e.clientY-wc.y)>8)S.w=Math.max(-540,Math.min(540,S.w+d*180/Math.PI*1.15*S.sr));},()=>{S.held=false;});
   const depth=(el,e)=>{const r=el.getBoundingClientRect();return Math.max(0.12,Math.min(1,0.12+(e.clientY-r.top)/r.height));};
-  const pedal=(sel,key)=>{const el=q(sel);drag(el,e=>{S[key]=depth(el,e);buzz(8);},e=>{S[key]=depth(el,e);},()=>{S[key]=0;});};pedal('#pBrk','b');pedal('#pAcc','a');
+  const PP2={b:{on:0,t0:0,pos:0},a:{on:0,t0:0,pos:0}},posF=(el,e)=>{const r=el.getBoundingClientRect();return Math.max(0,Math.min(1,(e.clientY-r.top)/r.height));};
+  const pedal=(sel,key)=>{const el=q(sel);drag(el,e=>{PP2[key]={on:1,t0:performance.now(),pos:posF(el,e)};S[key]=pedCurve(key,0,PP2[key].pos);buzz(8);},e=>{PP2[key].pos=posF(el,e);},()=>{PP2[key].on=0;S[key]=0;});};pedal('#pBrk','b');pedal('#pAcc','a');
+  const amB=(sel,v)=>{const el=q(sel);drag(el,()=>{S.am=v;buzz(10);},()=>{},()=>{S.am=0;});};amB('#pAmL',1);amB('#pAmR',-1);
   const L=q('#pLook');drag(L,e=>{const r=L.getBoundingClientRect();S.look=-Math.max(-1,Math.min(1,((e.clientX-r.left)/r.width-0.5)*2.2));},e=>{const r=L.getBoundingClientRect();S.look=-Math.max(-1,Math.min(1,((e.clientX-r.left)/r.width-0.5)*2.2));},()=>{S.look=0;});
   for(const b of q('#pGearSel').children)tp(b,()=>ev('gear',b.dataset.g));
   tp(q('#pBL'),()=>ev('blink',-1));tp(q('#pBR'),()=>ev('blink',1));tp(q('#pHorn'),()=>ev('horn'));tp(q('#pStart'),()=>ev('start'));
-  tp(q('#pHB'),()=>ev('hb'));q('#pView').addEventListener('click',()=>ev('view'));q('#pPause').addEventListener('click',()=>ev('pause'));
+  tp(q('#pHB'),()=>ev('hb'));q('#pView').addEventListener('click',()=>ev('view'));tp(q('#pLim'),()=>ev('lim'));q('#pPause').addEventListener('click',()=>ev('pause'));
   q('#pOK').addEventListener('click',()=>ev('ok'));q('#piNext').addEventListener('click',()=>{if(conn&&ok)try{conn.send({t:'ev',k:'inst',v:'next'});}catch(e){}buzz(15);});
   q('#pFull').addEventListener('click',()=>{const el=document.documentElement;try{const p=(el.requestFullscreen||el.webkitRequestFullscreen).call(el);if(p&&p.then)p.then(()=>{try{screen.orientation.lock('landscape').catch(()=>{});}catch(_){}}).catch(()=>{});}catch(e){}});
-  /* Tête par rotation du téléphone : gyroscope intégré autour de la verticale */
-  const R2D=Math.PI/180,G={on:false,yaw:0,inv:1,last:0,seen:false,b:null,g:null,look:0};
-  try{G.inv=+(localStorage.getItem('b78inv')||1)||1;}catch(e){}
-  const gmsg=t=>{q('#pGmsg').textContent=t||'';},gbtn=q('#pGyro');
-  const gSet=on=>{G.on=on;G.yaw=0;G.last=0;G.look=0;gbtn.classList.toggle('on',on);gbtn.classList.remove('pulse');gbtn.textContent=on?'Rotation ✓':'Tête par rotation';};
-  addEventListener('deviceorientation',e=>{if(e.beta!=null){G.b=e.beta;G.g=e.gamma;}});
-  addEventListener('devicemotion',e=>{if(!G.on)return;const rr=e.rotationRate;if(!rr||rr.alpha==null)return;
-    const now=performance.now();let dt=G.last?(now-G.last)/1000:0;G.last=now;if(dt>0.25)dt=0;G.seen=true;
-    let ux=0,uy=0,uz=1;if(G.b!=null){const b=G.b*R2D,g=G.g*R2D;ux=-Math.cos(b)*Math.sin(g);uy=Math.sin(b);uz=Math.cos(b)*Math.cos(g);}
-    else{const a=e.accelerationIncludingGravity;if(a&&a.x!=null){const n=Math.hypot(a.x,a.y,a.z)||1;ux=a.x/n;uy=a.y/n;uz=a.z/n;}}
-    G.yaw+=(rr.beta*ux+rr.gamma*uy+rr.alpha*uz)*dt;          // + = vers la gauche
-    if(Math.abs(G.yaw)<9)G.yaw*=Math.exp(-dt*0.7);           // recentrage doux (dérive du gyroscope)
-    G.yaw=Math.max(-100,Math.min(100,G.yaw));
-    const m=Math.abs(G.yaw);G.look=m<8?0:Math.sign(G.yaw)*Math.min(1,(m-8)/37)*G.inv;});
-  const gyroOn=()=>{
-    if(!window.isSecureContext){gmsg('Ici le site n’est pas sécurisé (http) : l’iPhone bloque les capteurs. Ça marchera sur la version en ligne. En attendant, glissez sur le pavé.');return;}
-    if(!window.DeviceMotionEvent){gmsg('Pas de capteur de mouvement : glissez sur le pavé pour regarder.');return;}
-    const asks=[];if(typeof DeviceMotionEvent.requestPermission==='function')asks.push(DeviceMotionEvent.requestPermission());
-    if(window.DeviceOrientationEvent&&typeof DeviceOrientationEvent.requestPermission==='function')asks.push(DeviceOrientationEvent.requestPermission().catch(()=>'granted'));
-    Promise.all(asks).then(r=>{if(r.some(x=>x!=='granted')){gmsg('Accès au mouvement refusé. Fermez cet onglet, rouvrez le lien et touchez « Autoriser ».');return;}
-      gSet(true);gmsg('Tenez le téléphone face à vous, puis tournez-le à gauche ou à droite comme votre tête.');
-      setTimeout(()=>{if(G.on&&!G.seen){gSet(false);gmsg('Aucun mouvement détecté : glissez sur le pavé pour regarder.');}},1800);})
-    .catch(()=>gmsg('Accès au mouvement refusé. Fermez cet onglet, rouvrez le lien et touchez « Autoriser ».'));};
-  gbtn.addEventListener('click',()=>{if(G.on){gSet(false);gmsg('Rotation coupée : glissez sur le pavé pour regarder.');}else gyroOn();});
-  q('#pCtr').addEventListener('click',()=>{G.yaw=0;G.look=0;buzz(15);});
-  q('#pInv').addEventListener('click',()=>{G.inv=-G.inv;try{localStorage.setItem('b78inv',G.inv);}catch(e){}buzz(15);gmsg(G.inv>0?'Sens normal.':'Sens inversé.');});
-  if(window.isSecureContext&&window.DeviceMotionEvent&&typeof DeviceMotionEvent.requestPermission!=='function')gyroOn();
-  else if(window.isSecureContext&&window.DeviceMotionEvent){gbtn.classList.add('pulse');gmsg('Touchez « Tête par rotation » pour regarder en tournant le téléphone.');}
-  else gmsg('Pour regarder : glissez sur le pavé (la rotation du téléphone marche sur la version en ligne).');
   const msg=(t,k)=>{q('#pMsg').textContent=t;q('#pDot').className='pdot '+(k||'');};
   try{navigator.wakeLock&&navigator.wakeLock.request('screen').catch(()=>{});}catch(e){}
   loadScript(PEERJS_URL).then(()=>{const peer=new Peer(undefined,peerOpts());
@@ -767,11 +746,12 @@ function runPad(code){
       conn.on('data',m=>{if(!m||typeof m!=='object')return;if(m.t==='vib')buzz(m.p);
         else if(m.t==='st'){q('#pSpd').textContent=m.v;q('#pGear').textContent=m.g;for(const b of q('#pGearSel').children)b.classList.toggle('on',b.dataset.g===m.g);
           q('#pStart').classList.toggle('on',!!m.e);q('#pHB').classList.toggle('on',!!m.h);q('#pBL').classList.toggle('on',m.bl===-1);q('#pBR').classList.toggle('on',m.bl===1);q('#pOK').hidden=!m.card;
-          if(!S.held)S.w=m.w;instUI(m.inst);}});
+          if(m.sr)S.sr=m.sr;q('#pLim').classList.toggle('on',!!m.limOn);if(!S.held)S.w=m.w;instUI(m.inst);}});
       conn.on('close',()=>{ok=false;msg('Déconnecté. Rechargez la page pour reconnecter.','ko');});});
     peer.on('error',e=>msg(e&&e.type==='peer-unavailable'?'Ordinateur introuvable : vérifiez le code ou rouvrez le QR code.':'Connexion impossible ('+(e&&e.type||'réseau')+').','ko'));
   }).catch(()=>msg('Pas de connexion internet.','ko'));
-  setInterval(()=>{q('#pWheelG').style.transform=`rotate(${S.w}deg)`;q('#pBrk').firstChild.style.height=S.b*100+'%';q('#pAcc').firstChild.style.height=S.a*100+'%';const LK=Math.abs(S.look)>0.03?S.look:(G.on?G.look:0);q('#pLookK').style.left=(50-LK*45)+'%';
+  setInterval(()=>{const now=performance.now();for(const k of['b','a'])if(PP2[k].on)S[k]=pedCurve(k,(now-PP2[k].t0)/1000,PP2[k].pos);
+    q('#pWheelG').style.transform=`rotate(${S.w/S.sr}deg)`;q('#pBrk').firstChild.style.height=S.b*100+'%';q('#pAcc').firstChild.style.height=S.a*100+'%';const LK=S.am?S.am*0.85:Math.abs(S.look)>0.03?S.look:0;q('#pLookK').style.left=(50-LK*45)+'%';
     if(conn&&ok)try{conn.send({t:'in',w:Math.round(S.w),held:S.held,a:+S.a.toFixed(2),b:+S.b.toFixed(2),look:+LK.toFixed(2)});}catch(e){}},33);}
 
 const HASKB=matchMedia('(hover:hover) and (pointer:fine)').matches;if(HASKB)document.body.classList.add('haskb');const kh=t=>HASKB?` (${t})`:'';
@@ -1386,7 +1366,7 @@ function mirrorPlane(w,h,tex){const g=new T.PlaneGeometry(w,h),uv=g.attributes.u
   const gb=new GB(),dk=0x1e2227,md=0x2a2f36,lt=0x8f8b84;
   gb.box(1.76,0.3,0.55,0,0.78,-0.88,dk);gb.box(1.76,0.05,0.44,0,0.94,-0.82,0x262a30);gb.box(0.42,0.06,0.13,-0.37,1.05,-0.68,dk);
   gb.box(0.25,0.3,0.7,0,0.52,-0.35,md);gb.box(0.07,0.13,0.09,0,0.72,-0.24,0x0f1113);gb.box(0.3,0.16,0.03,0.08,0.88,-0.64,0x0b0d10);
-  beam(gb,[-0.84,0.95,-1.0],[-0.72,1.44,-0.42],0.075,dk);beam(gb,[0.84,0.95,-1.0],[0.72,1.44,-0.42],0.075,dk);
+  beam(gb,[-0.84,0.95,-1.0],[-0.72,1.44,-0.42],0.05,dk);beam(gb,[0.84,0.95,-1.0],[0.72,1.44,-0.42],0.05,dk);
   gb.box(1.66,0.05,2.4,0,1.47,0.75,lt);gb.box(1.52,0.07,0.1,0,1.44,-0.44,lt);
   for(const s of[-1,1]){gb.box(0.08,0.62,2.3,s*0.92,0.66,0.4,md);gb.box(0.13,0.04,2.3,s*0.9,0.98,0.4,dk);gb.box(0.1,0.5,0.12,s*0.88,1.22,0.78,md);gb.box(0.12,0.55,0.5,s*0.82,1.18,1.78,md);}
   gb.box(1.8,0.05,3,0,0.25,0.3,0x16191d);gb.box(0.5,0.16,0.5,0.37,0.5,0.15,0x30353c);gb.box(0.5,0.62,0.12,0.37,0.86,0.45,0x30353c);
@@ -1837,8 +1817,8 @@ const FAUTES={
     tip:"Écoutez l'indication jusqu'au bout et repérez la rue à prendre avant d'arriver au carrefour."},
 };
 const pick=a=>a[(Math.random()*a.length)|0];
-const APP_VERSION='12';
-const settings={voice:true,coach:true,dc:true,stop:true,guide:true,inst:true,vir:true};
+const APP_VERSION='13';
+const settings={voice:true,coach:true,dc:true,stop:true,guide:true,inst:true,vir:true,dir:'facile',fov:68};
 try{Object.assign(settings,JSON.parse(localStorage.getItem('simuB78')||'{}'));}catch(e){}
 function saveSettings(){try{localStorage.setItem('simuB78',JSON.stringify(settings));}catch(e){}}
 const PEN={feu_orange:2,gauche:2,cycliste:2,jante:2,vitesse:1,clignotant:1,angle_mort:1,demarrage_clign:1,trottoir:1,distance:1,arriere:1,portiere:1};
@@ -1970,7 +1950,7 @@ function hitCurb(k,vin,n,lx,lf){
 
 function updatePlayer(dt){
   const c=car;
-  if(!wheelHeld&&!keySteer){const rate=170*Math.min(1,Math.abs(c.v)/4)*dt;c.wheel=Math.abs(c.wheel)<=rate?0:c.wheel-Math.sign(c.wheel)*rate;}
+  if(!wheelHeld&&!keySteer){const rate=(160+11*Math.abs(c.v)*3.6)*Math.min(1,Math.abs(c.v)/1.2)*dt;c.wheel=Math.abs(c.wheel)<=rate?0:c.wheel-Math.sign(c.wheel)*rate;}
   c.wheel=clamp(c.wheel,-540,540);const delta=(c.wheel/540)*MAXSTEER;
   let drive=0;
   if(c.engine&&(c.gear==='D'||c.gear==='R')){const sg=c.gear==='D'?1:-1,vmax=c.gear==='D'?(c.flat?8.5:58):5.5,vd=c.v*sg;
@@ -1992,7 +1972,12 @@ function updatePlayer(dt){
     resolveCollisions();}
   curbUpdate(dt);
   if(c.handbrake&&c.engine&&(c.gear==='D'||c.gear==='R')&&c.throttle>0.3){RT.hbT+=dt;if(RT.hbT>1.2){RT.hbT=-6;toast('La voiture ne bouge pas ?','I','Le frein à main est encore serré. Desserrez-le avant de démarrer.');}}else if(RT.hbT>0)RT.hbT=0;
-  if(c.blinker){const turned=Math.abs(angDiff(c.yaw,c.blinkYaw))>0.9;if(turned&&Math.abs(c.wheel)<70){c.blinker=0;}}
+  // clignotant : retour automatique comme dans une vraie voiture
+  if(c.blinker!==c._blPrev){c._blPrev=c.blinker;if(c.blinker){c.blinkMax=0;c.blinkX=c.x;c.blinkZ=c.z;}}
+  if(c.blinker){const sw=c.wheel*c.blinker;c.blinkMax=Math.max(c.blinkMax||0,sw);const turned=Math.abs(angDiff(c.yaw,c.blinkYaw))>0.9;
+    if((c.blinkMax>110&&sw<30)||(turned&&Math.abs(c.wheel)<70))c.blinker=0;
+    else if(c.blinkX!=null){const r=rightOf(c.blinkYaw),lat=((c.x-c.blinkX)*r.x+(c.z-c.blinkZ)*r.z)*c.blinker;
+      if(lat>2.7&&Math.abs(angDiff(c.yaw,c.blinkYaw))<0.09&&Math.abs(c.wheel)<45&&Math.abs(c.v)>5)c.blinker=0;}}
   if(c.blinker===-1)lastBlinkL=simT;if(c.blinker===1)lastBlinkR=simT;
   trailRec();
 }
@@ -2548,7 +2533,7 @@ const VIR={cur:null,inC:false,vmax:0,j0:0,faulted:false,side:'',nn:null,nv:0,tur
 const VDOT=(function(){const g=new T.PlaneGeometry(0.42,1.5);g.rotateX(-Math.PI/2);const m=new T.InstancedMesh(g,new T.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:0.92,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-8,polygonOffsetUnits:-16}),90);
   const M4=new T.Matrix4(),C=new T.Color(0xffffff);for(let i=0;i<90;i++){m.setMatrixAt(i,M4);m.setColorAt(i,C);}m.count=0;m.frustumCulled=false;m.renderOrder=2;scene.add(m);return m;})();
 const _vm=new T.Matrix4(),_vc=new T.Color();
-function virDots(pts){if(!pts||!pts.length){VDOT.count=0;return;}let n=0;for(let i=0;i<pts.length;i++){const q=pts[i];if(n>=90)break;const a=pts[Math.max(0,i-1)],b=pts[Math.min(pts.length-1,i+1)];_vm.makeRotationY(Math.atan2(b.x-a.x,b.z-a.z));_vm.setPosition(q.x,0.07,q.z);VDOT.setMatrixAt(n,_vm);VDOT.setColorAt(n,_vc.set(q.c));n++;}
+function virDots(pts){if(true||!pts||!pts.length){VDOT.count=0;return;}let n=0;for(let i=0;i<pts.length;i++){const q=pts[i];if(n>=90)break;const a=pts[Math.max(0,i-1)],b=pts[Math.min(pts.length-1,i+1)];_vm.makeRotationY(Math.atan2(b.x-a.x,b.z-a.z));_vm.setPosition(q.x,0.07,q.z);VDOT.setMatrixAt(n,_vm);VDOT.setColorAt(n,_vc.set(q.c));n++;}
   VDOT.count=n;VDOT.instanceMatrix.needsUpdate=true;if(VDOT.instanceColor)VDOT.instanceColor.needsUpdate=true;}
 const virActive=()=>{const M=game&&game.mission;if(mode!=='ville'||!game)return false;if(M&&M.virage)return true;if(!settings.vir)return false;return M?(!M.noGuide&&M.gps!==false):settings.guide;};
 const VC={brake:'#ffb21e',turn:'#2fc27a',out:'#e8eef5'};
@@ -2737,7 +2722,15 @@ function spoken(t){return String(t).replace(/[«»"]/g,'').replace(/\([^)]*\)/g,
   .replace(/(\d+)\s?km\/h/g,'$1 kilomètres heure').replace(/(\d)\s?m\b/g,'$1 mètres').replace(/\b1(?:re|ère)\b/g,'première').replace(/\b1er\b/g,'premier')
   .replace(/\b2e\b/g,'deuxième').replace(/\b3e\b/g,'troisième').replace(/\b4e\b/g,'quatrième').replace(/\b5e\b/g,'cinquième').replace(/\b([AD])(\d+)\b/g,'$1 $2')
   .replace(/\bSTOP\b/g,'stop').replace(/\bOK\b/g,'d\'accord').replace(/\s+/g,' ').replace(/\s+([.,])/g,'$1').trim();}
-function speak(t,prio){if(muted||!settings.voice||!t||!('speechSynthesis' in window)||!moniteurOn())return;try{if(prio||speechSynthesis.pending)speechSynthesis.cancel();
+const VPACK={keys:null,audio:null};
+try{fetch('voix/index.json').then(r=>r.ok?r.json():null).then(j=>{if(j&&j.files)VPACK.keys=new Set(j.files);}).catch(()=>{});}catch(e){}
+function vkey(t){const x=spoken(t).toLowerCase();let h=5381;for(let i=0;i<x.length;i++)h=(Math.imul(h,33)^x.charCodeAt(i))>>>0;return h.toString(36);}
+function speak(t,prio){if(t&&window.__spk)window.__spk.add(String(t));if(muted||!settings.voice||!t||!moniteurOn())return;
+  if(VPACK.keys){const k=vkey(t);if(VPACK.keys.has(k)){try{if(VPACK.audio&&(prio||!VPACK.audio.ended))VPACK.audio.pause();if('speechSynthesis' in window)speechSynthesis.cancel();
+      const au=new Audio('voix/'+k+'.mp3');VPACK.audio=au;au.onerror=()=>{VPACK.keys.delete(k);speakTTS(t,prio);};au.play().catch(()=>{});return;}catch(e){}}}
+  speakTTS(t,prio);}
+function speakTTS(t,prio){
+  if(!('speechSynthesis' in window))return;try{if(VPACK.audio&&!VPACK.audio.paused&&prio)VPACK.audio.pause();if(prio||speechSynthesis.pending)speechSynthesis.cancel();
   const good=VOICE&&/natural|neural|online|premium|enhanced|améliorée/i.test(VOICE.name),r0=good?1.0:0.94,parts=spoken(t).match(/[^.!?…]+[.!?…]*/g)||[spoken(t)];
   parts.forEach((ph,i)=>{ph=ph.trim();if(!ph)return;const u=new SpeechSynthesisUtterance(ph);u.lang='fr-FR';if(VOICE)u.voice=VOICE;
     const ex=/!$/.test(ph),qu=/\?$/.test(ph);u.rate=r0*(ex?1.05:qu?1.0:0.98+Math.random()*0.04)*(ph.length<25?1.03:1);u.pitch=ex?1.07:qu?1.04:0.99+Math.random()*0.03;u.volume=1;speechSynthesis.speak(u);});}catch(e){}}
@@ -2788,7 +2781,7 @@ function hudUpdate(){
   const kmh=Math.round(Math.abs(car.v)*3.6);if(lastHud.kmh!==kmh){ui.spd.textContent=kmh;lastHud.kmh=kmh;}
   const over=kmh>RT.lim+2;if(lastHud.over!==over){ui.speedBox.classList.toggle('over',over);lastHud.over=over;}
   if(lastHud.lim!==RT.lim){ui.lim.textContent=RT.lim;lastHud.lim=RT.lim;}
-  ui.wheelG.style.transform=`rotate(${car.wheel}deg)`;ui.wheelDeg.textContent=Math.round(car.wheel)+'°';
+  ui.wheelG.style.transform=`rotate(${car.wheel/steerRatio()}deg)`;ui.wheelDeg.textContent=Math.round(car.wheel)+'°';
   const bl=simT%0.76<0.38;ui.blL.classList.toggle('on',car.blinker===-1);ui.blR.classList.toggle('on',car.blinker===1);ui.blL.classList.toggle('lit',car.blinker===-1&&bl);ui.blR.classList.toggle('lit',car.blinker===1&&bl);
   ui.start.classList.toggle('on',car.engine);ui.hb.classList.toggle('on',car.handbrake);ui.hbTxt.textContent=car.handbrake?'serré':'desserré';
   for(const b of ui.gear.children)b.classList.toggle('on',b.dataset.g===car.gear);
@@ -2823,16 +2816,24 @@ function bindDrag(el,down,move,up){
 let wc={x:0,y:0,last:0};
 bindDrag(ui.wheel,e=>{const r=ui.wheel.getBoundingClientRect();wc.x=r.left+r.width/2;wc.y=r.top+r.height/2;wc.last=Math.atan2(e.clientY-wc.y,e.clientX-wc.x);wheelHeld=true;},
   e=>{const a=Math.atan2(e.clientY-wc.y,e.clientX-wc.x);let d=a-wc.last;if(d>Math.PI)d-=2*Math.PI;if(d<-Math.PI)d+=2*Math.PI;wc.last=a;
-    if(Math.hypot(e.clientX-wc.x,e.clientY-wc.y)>8)car.wheel=clamp(car.wheel+d/deg*1.15,-540,540);},()=>{wheelHeld=false;});
+    if(Math.hypot(e.clientX-wc.x,e.clientY-wc.y)>8)car.wheel=clamp(car.wheel+d/deg*1.15*steerRatio(),-540,540);},()=>{wheelHeld=false;});
+function steerRatio(){return settings.dir==='reel'?1:3;}
 function pedalDepth(el,e){const r=el.getBoundingClientRect();return clamp(0.12+((e.clientY-r.top)/r.height)*1.0,0.12,1);}
-bindDrag(ui.pB,e=>{pedalBrakeP=pedalDepth(ui.pB,e);},e=>{pedalBrakeP=pedalDepth(ui.pB,e);},()=>{pedalBrakeP=0;});
-bindDrag(ui.pA,e=>{pedalAccP=pedalDepth(ui.pA,e);},e=>{pedalAccP=pedalDepth(ui.pA,e);},()=>{pedalAccP=0;});
+// Pédales progressives : plus on garde le doigt, plus ça freine / accélère ; plus bas sur la pédale = plus fort
+function pedCurve(k,t,pos){return k==='b'?(0.45+0.55*Math.min(1,t/1.0))*(0.35+0.65*pos):(0.3+0.7*Math.min(1,t/1.5))*(0.3+0.7*pos);}
+const PED={b:{on:false,t0:0,pos:0},a:{on:false,t0:0,pos:0}};
+function pedPos(el,e){const r=el.getBoundingClientRect();return clamp((e.clientY-r.top)/r.height,0,1);}
+bindDrag(ui.pB,e=>{PED.b={on:true,t0:performance.now(),pos:pedPos(ui.pB,e)};pedalBrakeP=pedCurve('b',0,PED.b.pos);},e=>{PED.b.pos=pedPos(ui.pB,e);},()=>{PED.b.on=false;pedalBrakeP=0;});
+bindDrag(ui.pA,e=>{PED.a={on:true,t0:performance.now(),pos:pedPos(ui.pA,e)};pedalAccP=pedCurve('a',0,PED.a.pos);},e=>{PED.a.pos=pedPos(ui.pA,e);},()=>{PED.a.on=false;pedalAccP=0;});
 for(const b of ui.gear.children)tap(b,()=>shift(b.dataset.g));
 tap(ui.blL,()=>setBlinker(-1));tap(ui.blR,()=>setBlinker(1));
 tap($('#horn'),()=>{tone(392,0.4,'square',0.09);tone(494,0.4,'square',0.07);});
 tap(ui.start,()=>startStop());
 tap(ui.hb,()=>{car.handbrake=!car.handbrake;tone(car.handbrake?300:420,0.08,'square',0.06);});
-function setBlinker(s){car.blinker=car.blinker===s?0:s;car.blinkYaw=car.yaw;blinkTimer=0;if(car.blinker===-1)lastBlinkL=simT;if(car.blinker===1)lastBlinkR=simT;}
+function toggleLim(){car.limOn=!car.limOn;$('#limTag').hidden=!car.limOn;ui.lim.classList.toggle('limon',car.limOn);tone(car.limOn?700:420,0.06,'square',0.05);
+  toast(car.limOn?'Limiteur activé':'Limiteur coupé','I',car.limOn?"La voiture ne dépasse plus la vitesse affichée sur le panneau, même pied au plancher. Il suit les changements de limite.":"Vous gérez à nouveau la vitesse vous-même.");}
+tap(ui.lim,()=>toggleLim());
+function setBlinker(s){car.blinker=car.blinker===s?0:s;car.blinkYaw=car.yaw;car.blinkMax=0;car.blinkX=car.x;car.blinkZ=car.z;blinkTimer=0;if(car.blinker===-1)lastBlinkL=simT;if(car.blinker===1)lastBlinkR=simT;}
 function brakeOn(){return car.brake>=0.3||pedalBrakeP>0.05||!!keys.ArrowDown||(PAD.connected&&(PAD.in.b||0)>0.05);}
 function startStop(){
   if(!car.engine&&INST.need&&!INST.done){if(!INST.open)instOpen();return toast("Installez-vous d'abord",'I',"Siège, dossier, rétroviseurs, ceinture : on règle tout avant de démarrer.");}
@@ -2868,16 +2869,18 @@ addEventListener('keydown',e=>{if(e.repeat&&!['ArrowUp','ArrowDown','ArrowLeft',
   if(INST.open&&mode&&!paused&&!faultStop&&!frozen&&instKey(e)){e.preventDefault();keys[e.key]=false;return;}
   if(!mode||mode==='quiz'||paused)return;const k=e.key.toLowerCase();
   if(['p','r','n','d'].includes(k))shift(k.toUpperCase());else if(k==='q')setBlinker(-1);else if(k==='e')setBlinker(1);
-  else if(k===' '){car.handbrake=!car.handbrake;e.preventDefault();}else if(k==='enter')startStop();else if(k==='v')cycleView();else if(k==='h')tone(392,0.4,'square',0.09);
+  else if(k===' '){car.handbrake=!car.handbrake;e.preventDefault();}else if(k==='enter')startStop();else if(k==='k')toggleLim();else if(k==='v')cycleView();else if(k==='h')tone(392,0.4,'square',0.09);
   if(e.key.startsWith('Arrow'))e.preventDefault();});
 addEventListener('keyup',e=>{keys[e.key]=false;});
 function inputUpdate(dt){
   keySteer=!!(keys.ArrowLeft||keys.ArrowRight);if(keys.ArrowLeft)car.wheel-=380*dt;if(keys.ArrowRight)car.wheel+=380*dt;
+  {const now=performance.now();if(PED.b.on)pedalBrakeP=pedCurve('b',(now-PED.b.t0)/1000,PED.b.pos);if(PED.a.on)pedalAccP=pedCurve('a',(now-PED.a.t0)/1000,PED.a.pos);}
   const ka=keys.ArrowUp?(keys.Shift?1:0.6):0,kb=keys.ArrowDown?1:0;
   car.throttle=Math.max(pedalAccP,ka);car.brake=Math.max(pedalBrakeP,kb);
   if(PAD.connected){const P=PAD.in;if(P.held){car.wheel=clamp(P.w||0,-540,540);keySteer=true;}car.throttle=Math.max(car.throttle,P.a||0);car.brake=Math.max(car.brake,P.b||0);}
+  if(car.limOn&&car.gear==='D'){const vl=(RT.lim||50)/3.6;if(car.v>vl-0.25)car.throttle=0;else if(car.v>vl-1.5)car.throttle=Math.min(car.throttle,0.22);}
   if(keys.j)headYaw=Math.min(headYaw+200*deg*dt,100*deg);if(keys.l)headYaw=Math.max(headYaw-200*deg*dt,-100*deg);if(keys.j||keys.l){lookHeld=true;lookRelease=simT;}else if(lookPid==null)lookHeld=false;
-  if(PAD.connected&&Math.abs(PAD.in.look||0)>0.03){headYaw+=(PAD.in.look*115*deg-headYaw)*Math.min(1,dt*14);lookHeld=true;lookRelease=simT;}}
+  if(PAD.connected&&Math.abs(PAD.in.look||0)>0.03){headYaw+=(PAD.in.look*115*deg-headYaw)*Math.min(1,dt*9);lookHeld=true;lookRelease=simT;}}
 
 // Vues
 const VIEWS=['cockpit','chase','top'],VIEW_LBL={cockpit:'Vue conducteur',chase:'Vue arrière',top:'Vue du dessus'};
@@ -2939,7 +2942,7 @@ function renderCareer(){
     b.addEventListener('click',()=>{if(lk){if(b.animate)b.animate([{transform:'translateX(-6px)'},{transform:'translateX(6px)'},{transform:'none'}],{duration:260});return;}startMode(M.base,M);});g.appendChild(b);});}
   const br=$('#badgeRow');br.innerHTML='';for(const id in BADGES){const on=PROG.badges.includes(id),d=document.createElement('span');d.className='bd'+(on?' on':'');d.title=BADGES[id][1];d.innerHTML=`<i>${MEDAL}</i>${BADGES[id][0]}`;br.appendChild(d);}
   renderLevel();}
-function showTitle(){showOnly('#menu');$('#scrTitle').hidden=false;$('#scrCareer').hidden=true;renderLevel();$('#menu').scrollTop=0;}
+function showTitle(){contLabel();showOnly('#menu');$('#scrTitle').hidden=false;$('#scrCareer').hidden=true;renderLevel();$('#menu').scrollTop=0;}
 function showCareer(){showOnly('#menu');$('#scrTitle').hidden=true;$('#scrCareer').hidden=false;renderCareer();$('#menu').scrollTop=0;}
 function unlock(id){if(PROG.badges.includes(id))return;PROG.badges.push(id);saveProg();if(game)game.newBadges.push(id);pop('BADGE · '+BADGES[id][0].toUpperCase(),'badge');tone(880,0.1,'square',0.05);tone(1320,0.18,'square',0.05,0.1);}
 function pop(t,kind){const box=$('#pops');if(!box)return;const el=document.createElement('div');el.className='pop '+(kind||'plus');el.textContent=t;box.appendChild(el);while(box.children.length>3)box.firstChild.remove();setTimeout(()=>el.remove(),1500);}
@@ -3011,6 +3014,31 @@ function startMode(m,mission,fstart){
     creneau:"Créneau. Vous êtes à hauteur de la voiture de devant, pare-chocs arrière alignés. On démarre, clignotant droit, regard en arrière, puis marche arrière.",
     bataille:"Rangement en bataille, en marche arrière. On longe les places, on dépasse la place jaune, puis on recule dedans."}[m];
   if(mission&&mission.started)RT.started=true;RT.pendingIntro=intro;RT.introT=0.4;}
+
+/* ---------- Sauvegarde automatique de la partie ---------- */
+const SKEY='simuB78save';let saveT=0;
+try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist().catch(()=>{});}catch(e){}
+function saveGame(){if(!game||game.ending||finished||!mode||mode==='quiz'||INST.open)return;
+  const M=game.mission;try{localStorage.setItem(SKEY,JSON.stringify({v:1,t:Date.now(),m:mode,mid:M?M.id:null,fstart:lastStart.fstart||null,
+    car:{x:car.x,z:car.z,yaw:car.yaw,engine:car.engine,limOn:!!car.limOn},seat:SEAT,mir:MIR,started:!!RT.started,sessionT,
+    game:{score:game.score,permis:game.permis,obj:game.obj,fail:game.fail,precision:game.precision,ringPlan:game.ringPlan},journal}));}catch(e){}}
+function clearSave(){try{localStorage.removeItem(SKEY);}catch(e){}}
+function readSave(){try{const S=JSON.parse(localStorage.getItem(SKEY)||'null');if(S&&S.v===1&&Date.now()-S.t<45*864e5)return S;}catch(e){}return null;}
+function contLabel(){const S=readSave(),b=$('#bCont');if(!S){b.hidden=true;return;}const M=S.mid&&MISSIONS.find(m=>m.id===S.mid);
+  b.hidden=false;b.textContent='Reprendre · '+(M?`${mName(M)} – ${M.title}`:S.m==='ville'?'conduite libre':S.m==='creneau'?'créneau':'bataille');}
+function resumeGame(){const S=readSave();if(!S)return;const M=S.mid?MISSIONS.find(m=>m.id===S.mid):null;
+  startMode(S.m,M,S.fstart);instClose();INST.need=false;INST.done=true;Object.assign(SEAT,S.seat||{});if(S.mir)for(const k in MIR)Object.assign(MIR[k],S.mir[k]||{});
+  Object.assign(car,{x:S.car.x,z:S.car.z,yaw:S.car.yaw,v:0,sx:0,sz:0,yr:0,wheel:0,throttle:0,brake:0,blinker:0,engine:!!S.car.engine,gear:'P',handbrake:true,limOn:!!S.car.limOn});
+  $('#limTag').hidden=!car.limOn;ui.lim.classList.toggle('limon',car.limOn);
+  Object.assign(game,{score:S.game.score,permis:S.game.permis,obj:Object.assign(game.obj,S.game.obj),fail:S.game.fail,precision:S.game.precision});if(S.game.ringPlan)game.ringPlan=S.game.ringPlan;
+  journal.length=0;for(const j of S.journal||[])journal.push(j);sessionT=S.sessionT||0;RT.started=!!S.started;RT.pendingIntro=null;RT.plan=null;TRAIL.length=0;odo=0;
+  for(const m of movers)if(Math.hypot(m.x-car.x,m.z-car.z)<30){if(m.out&&m.home!=='city')respawnOut(m,true);else placeMover(m);}
+  for(const p2 of peds)if(!p2.down&&Math.hypot(p2.x-car.x,p2.z-car.z)<5)p2.dead=true;
+  lastHud.zone=null;updateGameHud();renderObjs();
+  toast('Partie reprise','ok',(car.engine?'Moteur en marche, frein à main serré.':'Pied sur le frein puis START.')+' Passez sur D quand vous êtes prêt.');}
+$('#bCont').addEventListener('click',()=>{audioInit();resumeGame();});
+{const ios=/iPhone|iPad|iPod/.test(navigator.userAgent),standalone=navigator.standalone||matchMedia('(display-mode: standalone)').matches;let seen=false;try{seen=localStorage.getItem('b78homeHint')==='1';}catch(e){}
+  $('#homeHint').hidden=!(ios&&!standalone&&!seen);$('#homeHintX').addEventListener('click',()=>{$('#homeHint').hidden=true;try{localStorage.setItem('b78homeHint','1');}catch(e){}});}
 function openMenu(){paused=true;ui.hud.hidden=true;showTitle();$('#resumeRow').hidden=!(mode&&mode!=='quiz'&&!finished);}
 $('#bMenu').addEventListener('click',openMenu);
 $('#bResume').addEventListener('click',()=>{if(!mode||mode==='quiz'||finished)return;paused=false;showOnly(null);ui.hud.hidden=false;layoutMirrors();});
@@ -3029,17 +3057,19 @@ setC.addEventListener('change',()=>{settings.coach=setC.checked;saveSettings();}
 $('#setVoiceSel').addEventListener('change',e=>{settings.voiceName=e.target.value;saveSettings();pickVoice();});
 $('#bVoiceTest').addEventListener('click',()=>{audioInit();pickVoice();if(!('speechSynthesis' in window))return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance("Bonjour ! Installez-vous, réglez votre siège, et quand vous êtes prêt, on démarre.");u.lang='fr-FR';if(VOICE)u.voice=VOICE;speechSynthesis.speak(u);}catch(e){}});
 const setD=$('#setDC');setD.checked=settings.dc;setD.addEventListener('change',()=>{settings.dc=setD.checked;saveSettings();});
+{const sd=$('#setDir'),sf=$('#setFov'),fv=$('#fovV');sd.value=settings.dir;sf.value=settings.fov;fv.textContent=settings.fov+'°';
+  sd.addEventListener('change',()=>{settings.dir=sd.value;saveSettings();});sf.addEventListener('input',()=>{settings.fov=+sf.value;fv.textContent=sf.value+'°';saveSettings();resize();});}
 for(const [id,k] of [['#setStop','stop'],['#setGuide','guide'],['#setInst','inst'],['#setVir','vir']]){const el=$(id);el.checked=settings[k];el.addEventListener('change',()=>{settings[k]=el.checked;saveSettings();});}
 $('#bHelp').addEventListener('click',()=>openMethod(mode==='creneau'?'creneau':mode==='bataille'?'bataille':'carrefours'));
 ui.end.addEventListener('click',()=>{if(!game||game.ending)return;
-  if(mode==='ville'){game.ending=true;if(game.mission){game.fail={kind:'abandon'};return showResults(false);}return showResults(!game.fail);}
+  if(mode==='ville'){game.ending=true;clearSave();if(game.mission){game.fail={kind:'abandon'};return showResults(false);}return showResults(!game.fail);}
   const r=evalManoeuvre();if(r.ok)return manSuccess(r);for(const m of r.msgs.slice(0,2))toast(m,'I');});
 $('#rCareer').addEventListener('click',showCareer);
 $('#rAgain').addEventListener('click',()=>startMode(lastStart.m,lastStart.mission,lastStart.fstart));
 $('#rNext').addEventListener('click',()=>{const N=lastStart.mission&&nextOf(lastStart.mission);if(N)startMode(N.base,N);});
 $('#bFull').addEventListener('click',()=>{const el=document.documentElement;try{const p=(el.requestFullscreen||el.webkitRequestFullscreen).call(el);if(p&&p.then)p.then(()=>{try{screen.orientation.lock('landscape').catch(()=>{});}catch(_){}}).catch(()=>{});}catch(e){}});
 
-function showResults(success){
+function showResults(success){clearSave();
   if(!game)return;paused=true;finished=true;ui.hud.hidden=true;showOnly('#bilan');$('#bilan').scrollTop=0;
   const M=game.mission,E=journal.filter(j=>j.sev==='E'),F=journal.filter(j=>j.sev==='F');
   let stars=0;if(success&&M){stars=F.length===0?3:F.length<=2?2:1;if(!game.precision)stars=Math.min(stars,2);}
@@ -3189,17 +3219,17 @@ function layoutMirrors(){const W=innerWidth,H=innerHeight;hudCam.right=W;hudCam.
   for(const [q,el] of quads){const r=el.getBoundingClientRect(),w=el.clientWidth,h=el.clientHeight;q.visible=w>0&&h>0;if(!q.visible)continue;
     const x=r.left+el.clientLeft,y=r.top+el.clientTop;q.scale.set(w,h,1);q.position.set(x+w/2,H-(y+h/2),0);}}
 function resize(){const W=innerWidth,H=innerHeight;renderer.setSize(W,H,false);const asp=W/H;
-  camMain.aspect=asp;camMain.fov=asp>1.2?55:72;camMain.updateProjectionMatrix();camMenu.aspect=asp;camMenu.updateProjectionMatrix();layoutMirrors();checkRotate();}
+  camMain.aspect=asp;camMain.fov=asp>1.2?(settings.fov||68):Math.min(95,(settings.fov||68)+16);camMain.updateProjectionMatrix();camMenu.aspect=asp;camMenu.updateProjectionMatrix();layoutMirrors();checkRotate();}
 let portraitOK=false;
 function checkRotate(){$('#rotate').hidden=portraitOK||innerWidth>=innerHeight||!mode||mode==='quiz'||paused;}
 $('#bPortrait').addEventListener('click',()=>{portraitOK=true;checkRotate();});
-addEventListener('resize',resize);addEventListener('orientationchange',()=>setTimeout(resize,250));
+addEventListener('resize',resize);addEventListener('pagehide',()=>saveGame());document.addEventListener('visibilitychange',()=>{if(document.hidden)saveGame();});addEventListener('orientationchange',()=>setTimeout(resize,250));
 
 const camPos=new T.Vector3(),tmpV=new T.Vector3(),crackEl=$('#crack');let menuAng=0.6;
 function toW(lx,ly,lz){const f=fwdOf(car.yaw),r=rightOf(car.yaw);return tmpV.set(car.x+r.x*lx-f.x*lz,ly,car.z+r.z*lx-f.z*lz);}
 function updateCameras(dt){
   carGroup.position.set(car.x,car.bodyY,car.z);carGroup.rotation.set(car.pitch,car.yaw,car.roll);
-  if(!lookHeld&&simT-lookRelease>0.35){const k=Math.exp(-dt*3.2);headYaw*=k;headPitch*=k;}
+  if(!lookHeld&&simT-lookRelease>0.35){const k=Math.exp(-dt*2.4);headYaw*=k;headPitch*=k;}
   const c=mirrorCams;c.int.position.copy(toW(0,1.25,2.35));c.int.lookAt(toW(0,0.95,30));
   c.l.position.copy(toW(-1.03,1.05,-0.68));c.l.lookAt(toW(-4.4,0.75,14));c.r.position.copy(toW(1.03,1.05,-0.68));c.r.lookAt(toW(4.4,0.75,14));
   for(const k of ['int','l','r']){const o=MIR[k];if(o.y)c[k].rotateY(o.y);if(o.p)c[k].rotateX(o.p);}
@@ -3238,7 +3268,7 @@ function step(dt){
     for(const p of peds){if(p.cw&&Math.hypot(p.x-car.x,p.z-car.z)>170)p.dead=true;p.update(dt);}
     for(let i=peds.length-1;i>=0;i--)if(peds[i].dead){scene.remove(peds[i].mesh);peds.splice(i,1);}
     updateLamps();
-    if(play){sessionT+=dt;inputUpdate(dt);if(game&&game.ending){car.throttle=0;car.brake=1;}doubleCommande(dt);updatePlayer(dt);zoneUpdate(dt);rulesUpdate(dt);coachGeneral(dt);dangerUpdate(dt);onboarding();gameUpdate(dt);virUpdate(dt);
+    if(play){sessionT+=dt;inputUpdate(dt);if(game&&game.ending){car.throttle=0;car.brake=1;}doubleCommande(dt);updatePlayer(dt);zoneUpdate(dt);rulesUpdate(dt);coachGeneral(dt);dangerUpdate(dt);onboarding();gameUpdate(dt);virUpdate(dt);saveT-=dt;if(saveT<=0){saveT=3;saveGame();}
       if((mode==='creneau'||mode==='bataille')&&!finished&&RT.started&&Math.abs(car.v)<0.05&&(car.gear==='P'||car.handbrake)){const r=evalManoeuvre();if(r.ok)manSuccess(r);}
       if(RT.pendingIntro&&!frozen){RT.introT-=dt;if(RT.introT<=0){const t=RT.pendingIntro;RT.pendingIntro=null;if(moniteurOn())coach('intro',t,{force:true,always:true,cd:0});else bubble('I','Objectif',t,null,null);}}
       if(cardT>0){cardT-=dt;if(cardT<=0&&!frozen)$('#rcard').hidden=true;}
@@ -3263,7 +3293,7 @@ $('#fOk').addEventListener('click',e=>{e.preventDefault();closeFault();});
 $('#rcard').addEventListener('pointerdown',e=>{if($('#rcard').classList.contains('mini'))closeCard();});for(let k=0;k<4;k++)spawnCrosser();
 carGroup.position.set(car.x,0,car.z);carGroup.rotation.y=car.yaw;
 resize();drawCluster();showTitle();
-window.__simu={faute,progress,VDOT,INST,instAct,instNext,instOpen,MIR,SEAT,VIR,CURVES,virActive,get journalLen(){return journal.length;},get gameObj(){return game;},FAUTES,COINS,PAD,applyDifficulty,legalMove,RULES,car,startMode,get mode(){return mode;},movers,peds,RT,journal:()=>journal,evalManoeuvre,shift,startStop,setView:v=>{view=v;},step,pedals:(a,b)=>{pedalAccP=a;pedalBrakeP=b;},setPaused:v=>{paused=v;},get simT(){return simT;},get game(){return game;},settings,MISSIONS,PROG,showCareer,showTitle,closeCard,head:v=>{headYaw=v;lookHeld=true;lookRelease=simT;},closeFault,get faultStop(){return faultStop;},get frozen(){return frozen;},respawnOut,placeMover,
+window.__simu={vkey,spoken,faute,progress,VDOT,INST,instAct,instNext,instOpen,MIR,SEAT,VIR,CURVES,virActive,get journalLen(){return journal.length;},get gameObj(){return game;},FAUTES,COINS,PAD,applyDifficulty,legalMove,RULES,car,startMode,get mode(){return mode;},movers,peds,RT,journal:()=>journal,evalManoeuvre,shift,startStop,setView:v=>{view=v;},step,pedals:(a,b)=>{pedalAccP=a;pedalBrakeP=b;},setPaused:v=>{paused=v;},get simT(){return simT;},get game(){return game;},settings,MISSIONS,PROG,showCareer,showTitle,closeCard,head:v=>{headYaw=v;lookHeld=true;lookRelease=simT;},closeFault,get faultStop(){return faultStop;},get frozen(){return frozen;},respawnOut,placeMover,
   world:{ROUTES,RINGS,PA,CAMP,RMP,AIRE,CE,CW,HAM,ZA,FERME,R1,R2,R3,PLAZAS,AIRE_PARK,sAi,worldStart,surfaceAt,routeQuery,computeZone,onRoad,isWall,projPlayer}};
 requestAnimationFrame(frame);
 })();
