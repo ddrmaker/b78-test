@@ -442,6 +442,7 @@ body.padmode #steer,body.padmode #drive,body.padmode #lookHint{display:none!impo
 .lim{pointer-events:auto;cursor:pointer}.lim.limon{box-shadow:0 0 0 3px var(--go)}
 .limtag{position:absolute;margin-left:-30px;margin-top:40px;background:var(--go);color:#062114;font-family:var(--f-display);font-weight:700;font-size:10px;padding:0 4px;border-radius:4px}
 .ihint{margin:6px 0 0;font-size:13px;line-height:1.35;color:var(--muted);background:rgba(255,255,255,.06);border:1px solid var(--edge);border-radius:10px;padding:7px 34px 7px 10px;position:relative}.ihint .btn{position:absolute;right:4px;top:4px;padding:2px 7px;font-size:13px}
+body.tlk #drive{opacity:.42;transition:opacity .3s}#drive{transition:opacity .3s}
 .vhint{display:block;font-size:12px;color:var(--muted);max-width:420px;line-height:1.3}
 #padModal{background:rgba(7,10,14,.88);display:grid;place-items:center}
 #padModal[hidden]{display:none!important}
@@ -576,10 +577,10 @@ body.haskb .kb.kin{position:static;margin-left:8px;box-shadow:0 1px 0 #111;font-
           <p class="ihint" id="homeHint" hidden>Pour garder votre progression sur iPhone : touchez <b>Partager</b> puis <b>Sur l'écran d'accueil</b>. <button class="btn" id="homeHintX" aria-label="Fermer">✕</button></p>
           <div class="g2"><button class="gbtn" id="bQuiz">Code de la route</button><button class="gbtn blue" id="bMeth">La méthode</button></div>
           <div class="g2"><button class="gbtn dark" id="bPad">Manette sur téléphone</button><button class="gbtn dark" id="bInstall" hidden>Installer l'appli</button></div>
-          <div class="sets"><label class="sw"><input type="checkbox" id="setVoice" checked>Voix du moniteur</label><select id="setVoiceSel" class="vsel" hidden aria-label="Choix de la voix"></select><button class="tb" id="bVoiceTest" style="height:30px;font-size:14px">Tester la voix</button><label class="sw"><input type="checkbox" id="setCoach" checked>Conseils en roulant</label><label class="sw"><input type="checkbox" id="setDC" checked>Double commande</label><label class="sw"><input type="checkbox" id="setStop" checked>Arrêt à chaque faute</label><label class="sw"><input type="checkbox" id="setInst" checked>Installation avant de partir</label><label class="sw"><input type="checkbox" id="setVir" checked>Aide aux virages</label><label class="sw sel">Direction <select id="setDir" class="vsel" style="display:inline-block"><option value="facile">facile (½ tour)</option><option value="reel">réaliste (1,5 tour)</option></select></label><label class="sw sel">Champ de vision <input type="range" id="setFov" min="55" max="82" step="1" style="width:110px"> <b id="fovV"></b></label><small class="vhint" id="voiceHint" hidden></small><button class="tb" id="bFull" style="height:30px;font-size:14px">Plein écran</button></div>
+          <div class="sets"><label class="sw"><input type="checkbox" id="setVoice" checked>Voix du moniteur</label><select id="setVoiceSel" class="vsel" hidden aria-label="Choix de la voix"></select><button class="tb" id="bVoiceTest" style="height:30px;font-size:14px">Tester la voix</button><label class="sw"><input type="checkbox" id="setCoach" checked>Conseils en roulant</label><label class="sw"><input type="checkbox" id="setDC" checked>Double commande</label><label class="sw"><input type="checkbox" id="setStop" checked>Arrêt à chaque faute</label><label class="sw"><input type="checkbox" id="setInst" checked>Installation avant de partir</label><label class="sw"><input type="checkbox" id="setVir" checked>Aide aux virages</label><label class="sw"><input type="checkbox" id="setTurnLook" checked>Regard dans les virages</label><label class="sw sel">Direction <select id="setDir" class="vsel" style="display:inline-block"><option value="facile">facile (½ tour)</option><option value="reel">réaliste (1,5 tour)</option></select></label><label class="sw sel">Champ de vision <input type="range" id="setFov" min="80" max="135" step="1" style="width:110px"> <b id="fovV"></b></label><small class="vhint" id="voiceHint" hidden></small><button class="tb" id="bFull" style="height:30px;font-size:14px">Plein écran</button></div>
         </div>
       </div>
-      <p class="fine foot"><b class="ver" id="appVer">Version 13</b> · Simulation pédagogique simplifiée : elle ne remplace pas les leçons avec un moniteur. Clavier : flèches, P R N D, Q / E clignotants, Espace frein à main, Entrée START, V vue. Moteur 3D : three.js (licence MIT). Polices : Bungee et Barlow (licence SIL OFL).</p>
+      <p class="fine foot"><b class="ver" id="appVer">Version 14</b> · Simulation pédagogique simplifiée : elle ne remplace pas les leçons avec un moniteur. Clavier : flèches, P R N D, Q / E clignotants, Espace frein à main, Entrée START, V vue. Moteur 3D : three.js (licence MIT). Polices : Bungee et Barlow (licence SIL OFL).</p>
     </section>
     <section class="scr" id="scrCareer" hidden>
       <div class="chead"><button class="gbtn dark sm" id="cBack">← Retour</button><h2>Carrière</h2><div class="lvl" id="lvlChip2"></div></div>
@@ -1817,8 +1818,8 @@ const FAUTES={
     tip:"Écoutez l'indication jusqu'au bout et repérez la rue à prendre avant d'arriver au carrefour."},
 };
 const pick=a=>a[(Math.random()*a.length)|0];
-const APP_VERSION='13';
-const settings={voice:true,coach:true,dc:true,stop:true,guide:true,inst:true,vir:true,dir:'facile',fov:68};
+const APP_VERSION='14';
+const settings={voice:true,coach:true,dc:true,stop:true,guide:true,inst:true,vir:true,dir:'facile',fov:68,hfov:118,turnLook:true};
 try{Object.assign(settings,JSON.parse(localStorage.getItem('simuB78')||'{}'));}catch(e){}
 function saveSettings(){try{localStorage.setItem('simuB78',JSON.stringify(settings));}catch(e){}}
 const PEN={feu_orange:2,gauche:2,cycliste:2,jante:2,vitesse:1,clignotant:1,angle_mort:1,demarrage_clign:1,trottoir:1,distance:1,arriere:1,portiere:1};
@@ -2013,6 +2014,21 @@ function coachApproach(B,d,dist){
     if(dist<26&&dist>12&&car.v*3.6>27)coach('spd'+key,'Ralentissez davantage : on tourne autour de 15 à 20 km/h.',{cd:999,force:true});
     if(ins==='L'&&dist<40&&dist>26)coach('leftpos',"Pour tourner à gauche, rapprochez-vous de l'axe médian et laissez passer ceux qui arrivent en face.",{cd:60,max:3});
     if(ins==='R'&&dist<19&&dist>11)coach('rightpos',"Braquez quand votre rétroviseur arrive au niveau de l'angle du trottoir, et regardez la rue où vous allez.",{cd:60,max:3});}}
+function coachPlace(dt){
+  if(mode!=='ville'||!RT.started||!moniteurOn()||INST.open)return;const c=car,kmh=Math.abs(c.v)*3.6,P=RT.place||(RT.place={t:0,k:null,warn:-99,good:-99});
+  let k=null,txt=null;
+  const ctx=roadCtx(c.x,c.z);
+  if(ctx&&ctx.kind==='seg'&&alignOf(c.yaw)>0.97&&kmh>9){const d=dirOfYaw(c.yaw),ri=rightOf(yawOfDir(d)),ax=ctx.axis==='h'?{x:c.x,z:ctx.i*S}:{x:ctx.j*S,z:c.z};
+    const off=(c.x-ax.x)*ri.x+(c.z-ax.z)*ri.z,B=nextNodeOnSeg(ctx,d),dB=B?Math.abs((B.x-c.x)*DIRS[d].x+(B.z-c.z)*DIRS[d].z):99;
+    if(dB>14){if(off<0.95){k='left';txt='Serrez un peu à droite : votre voiture est trop près du milieu de la chaussée.';}
+      else if(off>3.1){k='right';txt="Revenez un peu vers le milieu de votre voie : gardez environ un mètre avec les voitures garées et le trottoir.";}}}
+  else{const Z=RT.Z||{};if(Z.route&&!Z.off&&!Z.ring&&Z.dir&&kmh>25&&Z.route.campagne){const r=Z.route,dir=Z.dir,nL=dir>0?r.nF:r.nB;let lo=r.laneOff(dir,0),bd=99;for(let q=0;q<nL;q++){const v=r.laneOff(dir,q),dd=Math.abs(v-Z.lat);if(dd<bd){bd=dd;lo=v;}}
+      const off=(Z.lat-lo)*dir;if(off<-0.75){k='left';txt='Serrez à droite : sur une route à double sens, on roule près du bord droit de sa voie.';}else if(off>0.95){k='right';txt="Vous êtes trop près du bord : revenez un peu vers le milieu de votre voie.";}}}
+  if(k&&P.k===k)P.t+=dt;else{if(!k&&P.k&&simT-P.warn<12&&simT-P.good>30){P.good=simT;good(pick(['Voilà, bien placé.','C\'est mieux, restez comme ça.']));}P.k=k;P.t=0;}
+  if(k&&P.t>2.2&&simT-P.warn>22){P.warn=simT;coach('place_'+k,txt,{cd:22,force:true});}
+  // allure
+  const lim=RT.lim||50;if(kmh>lim*0.82&&kmh<=lim+1&&c.throttle<0.9){RT.allT=(RT.allT||0)+dt;if(RT.allT>18){RT.allT=0;coach('allure_ok',pick(['Bonne allure, régulière.','Très bien, vitesse adaptée.','Allure parfaite, continuez.']),{cd:110});}}else RT.allT=0;
+  if(kmh>lim-1&&kmh<=lim+2&&c.throttle>0.5){RT.limT=(RT.limT||0)+dt;if(RT.limT>2.5){RT.limT=0;coach('allure_lim',`Vous arrivez à ${lim} : levez légèrement le pied pour rester en dessous.`,{cd:45});}}else RT.limT=0;}
 function coachGeneral(dt){
   const c=car,kmh=Math.abs(c.v)*3.6;
   if(c.throttle>0.15&&c.brake>0.15){RT.twoT+=dt;if(RT.twoT>0.4)coach('two',"Un seul pied ! En boîte auto, on n'appuie jamais sur les deux pédales en même temps.",{cd:25,force:true});}else RT.twoT=0;
@@ -2566,7 +2582,13 @@ function virCity(kmh,dt){
   let ph,txt,cls='';
   if(dn>32){ph=1;txt=car.blinker===(R?1:-1)?'Clignotant mis : ralentissez':'Clignotant '+(R?'droit':'gauche')+', puis ralentissez';}
   else if(dn>13){if(kmh>vT+4){ph=1;txt=`Ralentissez : environ ${vT} km/h pour tourner`;cls='warn';}else{ph=2;txt=R?'Serrez à droite, regardez dans la rue (piétons)':'Rapprochez-vous du centre, regardez en face et les piétons';}}
-  else{ph=3;txt=R?'Braquez quand vos roues avant arrivent au coin du trottoir':"Avancez jusqu'au centre du carrefour, puis braquez";if(kmh>vT+8){txt='Trop vite pour tourner ! Freinez';cls='bad';}}
+  else{ph=3;const Dn=DIRS[st.din],f=fwdOf(car.yaw),rt=rightOf(car.yaw),riN=rightOf(yawOfDir(st.din));let a;
+    if(R){const cx=n.x-Dn.x*HALF+riN.x*HALF,cz=n.z-Dn.z*HALF+riN.z*HALF,mx=car.x+rt.x*0.98-f.x*0.05,mz=car.z+rt.z*0.98-f.z*0.05;a=(cx-mx)*Dn.x+(cz-mz)*Dn.z;}
+    else{const fx=car.x+f.x*2.1,fz=car.z+f.z*2.1;a=(n.x-fx)*Dn.x+(n.z-fz)*Dn.z+0.5;}
+    const turning=Math.abs(car.wheel)*Math.sign(car.wheel)*(R?1:-1)>200;
+    if(a>0.4&&!turning){txt=R?'Avancez : braquez quand votre rétroviseur droit arrive au coin du trottoir':"Avancez jusqu'au centre du carrefour, puis braquez";if(a<6&&Math.abs(car.wheel)>150&&Math.sign(car.wheel)===(R?1:-1))txt='Trop tôt ! Attendez le repère avant de braquer';}
+    else{txt='Braquez maintenant, en regardant la rue où vous allez';if(VIR.braq!==n){VIR.braq=n;coach('braq'+n.i+'_'+n.j+'_'+Math.round(simT/20),'Braquez maintenant !',{force:true,cd:0});}}
+    if(kmh>vT+8){txt='Trop vite pour tourner ! Freinez';cls='bad';}}
   // trajectoire : approche, puis courbe vers la voie de droite de la rue suivante
   const Di=DIRS[st.din],Do=DIRS[st.d2],ri=rightOf(yawOfDir(st.din)),ro=rightOf(yawOfDir(st.d2)),L=1.8,pts=[];
   const P0={x:n.x-Di.x*13+ri.x*L,z:n.z-Di.z*13+ri.z*L},C={x:n.x+(ri.x+ro.x)*L,z:n.z+(ri.z+ro.z)*L},P2={x:n.x+Do.x*13+ro.x*L,z:n.z+Do.z*13+ro.z*L};
@@ -3057,9 +3079,9 @@ setC.addEventListener('change',()=>{settings.coach=setC.checked;saveSettings();}
 $('#setVoiceSel').addEventListener('change',e=>{settings.voiceName=e.target.value;saveSettings();pickVoice();});
 $('#bVoiceTest').addEventListener('click',()=>{audioInit();pickVoice();if(!('speechSynthesis' in window))return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance("Bonjour ! Installez-vous, réglez votre siège, et quand vous êtes prêt, on démarre.");u.lang='fr-FR';if(VOICE)u.voice=VOICE;speechSynthesis.speak(u);}catch(e){}});
 const setD=$('#setDC');setD.checked=settings.dc;setD.addEventListener('change',()=>{settings.dc=setD.checked;saveSettings();});
-{const sd=$('#setDir'),sf=$('#setFov'),fv=$('#fovV');sd.value=settings.dir;sf.value=settings.fov;fv.textContent=settings.fov+'°';
-  sd.addEventListener('change',()=>{settings.dir=sd.value;saveSettings();});sf.addEventListener('input',()=>{settings.fov=+sf.value;fv.textContent=sf.value+'°';saveSettings();resize();});}
-for(const [id,k] of [['#setStop','stop'],['#setGuide','guide'],['#setInst','inst'],['#setVir','vir']]){const el=$(id);el.checked=settings[k];el.addEventListener('change',()=>{settings[k]=el.checked;saveSettings();});}
+{const sd=$('#setDir'),sf=$('#setFov'),fv=$('#fovV');sd.value=settings.dir;sf.value=settings.hfov;fv.textContent=settings.hfov+'°';
+  sd.addEventListener('change',()=>{settings.dir=sd.value;saveSettings();});sf.addEventListener('input',()=>{settings.hfov=+sf.value;fv.textContent=sf.value+'°';saveSettings();resize();});}
+for(const [id,k] of [['#setStop','stop'],['#setGuide','guide'],['#setInst','inst'],['#setVir','vir'],['#setTurnLook','turnLook']]){const el=$(id);el.checked=settings[k];el.addEventListener('change',()=>{settings[k]=el.checked;saveSettings();});}
 $('#bHelp').addEventListener('click',()=>openMethod(mode==='creneau'?'creneau':mode==='bataille'?'bataille':'carrefours'));
 ui.end.addEventListener('click',()=>{if(!game||game.ending)return;
   if(mode==='ville'){game.ending=true;clearSave();if(game.mission){game.fail={kind:'abandon'};return showResults(false);}return showResults(!game.fail);}
@@ -3219,13 +3241,13 @@ function layoutMirrors(){const W=innerWidth,H=innerHeight;hudCam.right=W;hudCam.
   for(const [q,el] of quads){const r=el.getBoundingClientRect(),w=el.clientWidth,h=el.clientHeight;q.visible=w>0&&h>0;if(!q.visible)continue;
     const x=r.left+el.clientLeft,y=r.top+el.clientTop;q.scale.set(w,h,1);q.position.set(x+w/2,H-(y+h/2),0);}}
 function resize(){const W=innerWidth,H=innerHeight;renderer.setSize(W,H,false);const asp=W/H;
-  camMain.aspect=asp;camMain.fov=asp>1.2?(settings.fov||68):Math.min(95,(settings.fov||68)+16);camMain.updateProjectionMatrix();camMenu.aspect=asp;camMenu.updateProjectionMatrix();layoutMirrors();checkRotate();}
+  camMain.aspect=asp;{const h=(settings.hfov||118)*Math.PI/360;camMain.fov=clamp(2*Math.atan(Math.tan(h)/asp)*180/Math.PI,48,asp>1.2?100:96);}camMain.updateProjectionMatrix();camMenu.aspect=asp;camMenu.updateProjectionMatrix();layoutMirrors();checkRotate();}
 let portraitOK=false;
 function checkRotate(){$('#rotate').hidden=portraitOK||innerWidth>=innerHeight||!mode||mode==='quiz'||paused;}
 $('#bPortrait').addEventListener('click',()=>{portraitOK=true;checkRotate();});
 addEventListener('resize',resize);addEventListener('pagehide',()=>saveGame());document.addEventListener('visibilitychange',()=>{if(document.hidden)saveGame();});addEventListener('orientationchange',()=>setTimeout(resize,250));
 
-const camPos=new T.Vector3(),tmpV=new T.Vector3(),crackEl=$('#crack');let menuAng=0.6;
+const camPos=new T.Vector3(),tmpV=new T.Vector3(),crackEl=$('#crack');let TLK=0,TLKon=false;let menuAng=0.6;
 function toW(lx,ly,lz){const f=fwdOf(car.yaw),r=rightOf(car.yaw);return tmpV.set(car.x+r.x*lx-f.x*lz,ly,car.z+r.z*lx-f.z*lz);}
 function updateCameras(dt){
   carGroup.position.set(car.x,car.bodyY,car.z);carGroup.rotation.set(car.pitch,car.yaw,car.roll);
@@ -3234,7 +3256,9 @@ function updateCameras(dt){
   c.l.position.copy(toW(-1.03,1.05,-0.68));c.l.lookAt(toW(-4.4,0.75,14));c.r.position.copy(toW(1.03,1.05,-0.68));c.r.lookAt(toW(4.4,0.75,14));
   for(const k of ['int','l','r']){const o=MIR[k];if(o.y)c[k].rotateY(o.y);if(o.p)c[k].rotateX(o.p);}
   camMain.layers.set(0);
-  if(view==='cockpit'){camMain.layers.enable(1);const cmpV=innerHeight<=440;if(wheel3D&&wheel3D.visible===cmpV)wheel3D.visible=!cmpV;camMain.position.copy(toW(-0.37,1.2+(cmpV?0.05:0)+car.bodyY-SEAT.back*0.01,0.12+SEAT.pos*0.022+SEAT.back*0.012));camMain.rotation.set(headPitch+car.pitch,car.yaw+headYaw,car.roll,'YXZ');}
+  if(view==='cockpit'){camMain.layers.enable(1);const cmpV=innerHeight<=440;if(wheel3D&&wheel3D.visible===cmpV)wheel3D.visible=!cmpV;camMain.position.copy(toW(-0.37,1.23+(cmpV?0.04:0)+car.bodyY-SEAT.back*0.01,0.24+SEAT.pos*0.022+SEAT.back*0.012));
+    {const kmh=Math.abs(car.v)*3.6,tg=settings.turnLook&&!lookHeld&&mode==='ville'&&car.gear==='D'?-clamp(car.wheel/400,-1,1)*55*deg*clamp((48-kmh)/22,0,1):0;TLK+=(tg-TLK)*Math.min(1,dt*2.6);const tk=Math.abs(TLK)>0.3;if(tk!==TLKon){TLKon=tk;document.body.classList.toggle('tlk',tk);}}
+    camMain.rotation.set(headPitch+car.pitch-0.05,car.yaw+headYaw+TLK,car.roll,'YXZ');}
   else if(view==='chase'){camMain.layers.enable(2);const f=fwdOf(car.yaw+orbitYaw);tmpV.set(car.x-f.x*7.5,2.8+orbitH,car.z-f.z*7.5);camPos.lerp(tmpV,Math.min(1,dt*6));if(camPos.distanceTo(tmpV)>20)camPos.copy(tmpV);
     camMain.position.copy(camPos);camMain.up.set(0,1,0);camMain.lookAt(car.x,1,car.z);}
   else{camMain.layers.enable(2);const f=fwdOf(car.yaw+orbitYaw);camMain.position.set(car.x,18+orbitH,car.z);camMain.up.set(f.x,0,f.z);camMain.lookAt(car.x,0,car.z);}
@@ -3268,7 +3292,7 @@ function step(dt){
     for(const p of peds){if(p.cw&&Math.hypot(p.x-car.x,p.z-car.z)>170)p.dead=true;p.update(dt);}
     for(let i=peds.length-1;i>=0;i--)if(peds[i].dead){scene.remove(peds[i].mesh);peds.splice(i,1);}
     updateLamps();
-    if(play){sessionT+=dt;inputUpdate(dt);if(game&&game.ending){car.throttle=0;car.brake=1;}doubleCommande(dt);updatePlayer(dt);zoneUpdate(dt);rulesUpdate(dt);coachGeneral(dt);dangerUpdate(dt);onboarding();gameUpdate(dt);virUpdate(dt);saveT-=dt;if(saveT<=0){saveT=3;saveGame();}
+    if(play){sessionT+=dt;inputUpdate(dt);if(game&&game.ending){car.throttle=0;car.brake=1;}doubleCommande(dt);updatePlayer(dt);zoneUpdate(dt);rulesUpdate(dt);coachGeneral(dt);dangerUpdate(dt);onboarding();gameUpdate(dt);virUpdate(dt);coachPlace(dt);saveT-=dt;if(saveT<=0){saveT=3;saveGame();}
       if((mode==='creneau'||mode==='bataille')&&!finished&&RT.started&&Math.abs(car.v)<0.05&&(car.gear==='P'||car.handbrake)){const r=evalManoeuvre();if(r.ok)manSuccess(r);}
       if(RT.pendingIntro&&!frozen){RT.introT-=dt;if(RT.introT<=0){const t=RT.pendingIntro;RT.pendingIntro=null;if(moniteurOn())coach('intro',t,{force:true,always:true,cd:0});else bubble('I','Objectif',t,null,null);}}
       if(cardT>0){cardT-=dt;if(cardT<=0&&!frozen)$('#rcard').hidden=true;}
